@@ -23,11 +23,16 @@ class Uniform : RandomEngine {
 };
 
 
-class Bernoulli : public Uniform {
+class Bernoulli : RandomEngine {
+  protected:
+    double prob;
+    long n;
+    std::bernoulli_distribution *distribution;
   public:
-    Bernoulli() : Uniform(0,1) { }
-    Bernoulli(long val) : Uniform(0,1,val) { }
-    ~Bernoulli() { }
+     Bernoulli(double p) : RandomEngine(), prob(p) { distribution = new std::bernoulli_distribution(p); }
+     Bernoulli(double p,long val) : RandomEngine(val), prob(p) { distribution = new std::bernoulli_distribution(p); }
+    ~Bernoulli() { delete distribution ;}
+    int operator ()() { return (*distribution)(*generator); }
 };
 
 
@@ -94,8 +99,8 @@ void Uniform_dealloc(void *self) {
 }
 
 extern "C"
-void *Bernoulli_init() {
-  return (void *) new Bernoulli();
+void *Bernoulli_init(double p) {
+  return (void *) new Bernoulli(p);
 }
 
 extern "C"

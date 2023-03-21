@@ -21,13 +21,16 @@
 #include "_rg_part_.c"
 
 #define DISTRIBUTION_NAME Bernoulli
-#define RG_D_STRUCT_PARMS
-#define RG_NEW_BLOCK
-#define RG_PARMS_STRING
-#define RG_PARMS_MASK
-#define RG_D_INIT_PARMS
-#define RG_PYARG_PARMS
-#define RG_MEMBERS_PARMS
+#define RG_D_STRUCT_PARMS \
+     double p;
+#define RG_NEW_BLOCK self->p = 0.0;
+#define RG_PARMS_STRING "p", 
+#define RG_PARMS_MASK "d"
+#define RG_PYARG_PARMS &self->p,
+#define RG_D_INIT_PARMS self->p
+#define RG_MEMBERS_PARMS \
+    {"p", T_DOUBLE, offsetof(OBJECT, p), 0, \
+     "Distribution parameter."},
 #include "_rg_part_.c"
 
 #define DISTRIBUTION_NAME Binomial
