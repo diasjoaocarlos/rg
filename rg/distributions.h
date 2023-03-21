@@ -12,7 +12,7 @@ void Uniform_dealloc(void *self);
 
 
 extern 
-void *Bernoulli_init();
+void *Bernoulli_init(double p);
 
 extern 
 long Bernoulli_get(void *self);
